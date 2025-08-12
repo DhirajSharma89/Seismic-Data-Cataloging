@@ -1,0 +1,6 @@
+# Python cache
+backend/__pycache__/
+backend/routers/__pycache__/
+
+# Node modules
+frontend/node_modules/

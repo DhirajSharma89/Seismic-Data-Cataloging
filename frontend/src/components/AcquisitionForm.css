@@ -1,0 +1,123 @@
+.acquisition-form-container {
+  max-width: 900px; /* Increased max-width to accommodate two columns */
+  margin: 20px auto; /* Reduced top/bottom margin */
+  background: #eef2f5;
+  padding: 20px; /* Reduced padding */
+  border-radius: 10px; /* Consistent border-radius */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Consistent font */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Added shadow for better appearance */
+}
+
+.acquisition-form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px; /* Reduced margin */
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.form-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 15px; /* Reduced gap between columns */
+    margin-bottom: 10px; /* Reduced space before the submit button */
+
+    /* Responsive adjustment: stack columns on smaller screens */
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr; /* Single column on screens smaller than 768px */
+        gap: 10px; /* Adjusted gap for single column */
+    }
+}
+
+.form-column {
+    /* Each column will contain form groups */
+}
+
+.form-group {
+  margin-bottom: 8px; /* Reduced margin between form groups */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px; /* Reduced margin */
+    color: #555;
+    font-size: 14px; /* Slightly smaller font for labels */
+    font-weight: 500;
+}
+
+/* Apply consistent styling to both input and select elements */
+input, select {
+  width: 100%;
+  padding: 8px 10px; /* Reduced padding */
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Consistent border-radius */
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width */
+  font-size: 15px; /* Slightly smaller font for inputs */
+  background-color: #ffffff; /* White input background */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Specific styles for select to remove default arrow and add custom one */
+select {
+  -webkit-appearance: none; /* Remove default browser styling for select */
+  -moz-appearance: none;    /* Remove default browser styling for select */
+  appearance: none;         /* Remove default browser styling for select */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.6-6.4H18.6c-5%200-9.3%201.8-12.9%205.4-3.6%203.6-5.4%207.8-5.4%2012.8%200%205%201.8%209.2%205.4%2012.8l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095.8c3.6-3.6%205.4-7.8%205.4-12.8%200-5-1.8-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* Custom SVG arrow */
+  background-repeat: no-repeat;
+  background-position: right 8px center; /* Position the arrow */
+  background-size: 12px; /* Size of the arrow */
+  padding-right: 25px; /* Add padding to prevent text overlapping the arrow */
+}
+
+input:focus, select:focus {
+    border-color: #4caf50; /* Green focus color */
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25); /* Green shadow on focus */
+    outline: none;
+}
+
+button {
+  margin-top: 20px; /* Adjusted margin */
+  padding: 10px 20px; /* Adjusted padding */
+  background-color: #4caf50; /* Green button */
+  color: white;
+  border: none;
+  border-radius: 8px; /* Consistent border-radius */
+  font-size: 16px; /* Consistent font size */
+  font-weight: 600; /* Consistent font weight */
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  display: block; /* Make button take full width */
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2); /* Added shadow for better appearance */
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+}
+
+.form-message {
+  margin-top: 15px; /* Adjusted margin */
+  color: green;
+  text-align: center; /* Center the message */
+  font-weight: 500; /* Consistent font weight */
+  padding: 8px; /* Consistent padding */
+  border-radius: 5px; /* Consistent border-radius */
+  background-color: #d4edda; /* Light green background for success */
+  color: #155724; /* Dark green text for success */
+  border: 1px solid #c3e6cb; /* Green border for success */
+}
+
+.form-message.error {
+    background-color: #f8d7da; /* Light red background for error */
+    color: #721c24; /* Dark red text for error */
+    border: 1px solid #f5c6cb; /* Red border for error */
+}
+
+/* Error message for survey IDs */
+.error-message {
+    color: #dc3545; /* Red color for errors */
+    font-size: 14px;
+    margin-top: 5px;
+}
