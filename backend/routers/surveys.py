@@ -5,7 +5,8 @@ from database import get_field_data_conn
 router = APIRouter(prefix="/surveys", tags=["Surveys"])
 
 @router.post("")
-def create_survey(data: dict):
+def create_block(data: dict):
+
     try:
         conn = get_field_data_conn()
         cursor = conn.cursor()

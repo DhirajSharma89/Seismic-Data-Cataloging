@@ -64,7 +64,7 @@ def get_block_count():
         if conn:
             conn.close()
 
-@router.get("/ids")
+@router.get("/blocks/ids")
 def get_block_ids():
     """
     Fetches a list of all existing block_ids from the block_data table.
