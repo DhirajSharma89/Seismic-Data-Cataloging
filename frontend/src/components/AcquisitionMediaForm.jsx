@@ -1,6 +1,6 @@
-// AcquisitionMediaForm.jsx
-import React, { useState, useEffect } from 'react'; // Import useEffect
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from "../config";  // ✅ import config
 import './AcquisitionMediaForm.css';
 
 const AcquisitionMediaForm = () => {
@@ -36,43 +36,38 @@ const AcquisitionMediaForm = () => {
     copex_status: ''
   });
 
-  const [acquisitionIds, setAcquisitionIds] = useState([]); // New state for acquisition IDs
-  const [loadingAcquisitionIds, setLoadingAcquisitionIds] = useState(true); // Loading state
-  const [acquisitionIdError, setAcquisitionIdError] = useState(null); // Error state
-
+  const [acquisitionIds, setAcquisitionIds] = useState([]);
+  const [loadingAcquisitionIds, setLoadingAcquisitionIds] = useState(true);
+  const [acquisitionIdError, setAcquisitionIdError] = useState(null);
   const [message, setMessage] = useState('');
 
-  // Fetch acquisition IDs when the component mounts
+  // Fetch acquisition IDs
   useEffect(() => {
     const fetchAcquisitionIds = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/acquisition/ids');
+        const response = await axios.get(`${API_BASE_URL}/acquisition/ids`);
         setAcquisitionIds(response.data.acquisition_ids);
-        setLoadingAcquisitionIds(false);
       } catch (error) {
         console.error("Error fetching acquisition IDs:", error);
-        setAcquisitionIdError("Failed to load Acquisition IDs. Please ensure the backend is running and acquisition data exists.");
+        setAcquisitionIdError("Failed to load Acquisition IDs.");
+      } finally {
         setLoadingAcquisitionIds(false);
       }
     };
 
     fetchAcquisitionIds();
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(''); // Clear previous messages
+    setMessage('');
     try {
-      await axios.post('http://localhost:8000/acquisition-media', formData);
+      await axios.post(`${API_BASE_URL}/acquisition-media`, formData);
       setMessage('Acquisition Media data submitted successfully!');
-      // Optionally clear form after successful submission
       setFormData({
         acq_serial_num: '',
         acquisition_id: '',
@@ -105,37 +100,31 @@ const AcquisitionMediaForm = () => {
         copex_status: ''
       });
     } catch (error) {
-      console.error("Error submitting acquisition media data:", error.response ? error.response.data : error.message);
-      setMessage('Error submitting acquisition media data: ' + (error.response?.data?.detail || error.message));
+      console.error("Error submitting acquisition media data:", error);
+      setMessage('Error submitting acquisition media data');
     }
   };
 
-  // Define fields for left and right columns
-  // Filter out 'acquisition_id' as it's handled separately
   const otherFormKeys = Object.keys(formData).filter(key => key !== 'acquisition_id');
   const midPoint = Math.ceil(otherFormKeys.length / 2);
-
-  const leftColumnFields = otherFormKeys.slice(0, midPoint);
-  const rightColumnFields = otherFormKeys.slice(midPoint);
 
   return (
     <div className="acquisition-media-form-container">
       <h2>Acquisition Media Entry</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-columns"> {/* Container for the two columns */}
-          <div className="form-column"> {/* Left column */}
-            {/* Render Acq Serial Num as a regular input */}
+        <div className="form-columns">
+          <div className="form-column">
             <div className="form-group">
-                <label>Acq Serial Num</label>
-                <input
-                    type="text"
-                    name="acq_serial_num"
-                    value={formData.acq_serial_num}
-                    onChange={handleChange}
-                    required
-                />
+              <label>Acq Serial Num</label>
+              <input
+                type="text"
+                name="acq_serial_num"
+                value={formData.acq_serial_num}
+                onChange={handleChange}
+                required
+              />
             </div>
-            {/* Render Acquisition ID as a dropdown in the first column */}
+
             <div className="form-group">
               <label>Acquisition ID</label>
               {loadingAcquisitionIds ? (
@@ -158,8 +147,8 @@ const AcquisitionMediaForm = () => {
                 </select>
               )}
             </div>
-            {/* Render remaining left column fields */}
-            {leftColumnFields.map((key) => (
+
+            {otherFormKeys.slice(0, midPoint).map((key) => (
               <div key={key} className="form-group">
                 <label>{key.replace(/_/g, ' ')}</label>
                 <input
@@ -167,13 +156,13 @@ const AcquisitionMediaForm = () => {
                   name={key}
                   value={formData[key]}
                   onChange={handleChange}
-                  required={key !== 'file_content'} // you may want to handle file separately
                 />
               </div>
             ))}
           </div>
-          <div className="form-column"> {/* Right column */}
-            {rightColumnFields.map((key) => (
+
+          <div className="form-column">
+            {otherFormKeys.slice(midPoint).map((key) => (
               <div key={key} className="form-group">
                 <label>{key.replace(/_/g, ' ')}</label>
                 <input
@@ -181,7 +170,6 @@ const AcquisitionMediaForm = () => {
                   name={key}
                   value={formData[key]}
                   onChange={handleChange}
-                  required={key !== 'file_content'} // you may want to handle file separately
                 />
               </div>
             ))}

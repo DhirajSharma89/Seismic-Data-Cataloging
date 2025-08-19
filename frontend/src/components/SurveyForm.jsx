@@ -32,7 +32,7 @@ const SurveyForm = () => {
   useEffect(() => {
     const fetchBlockIds = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/blocks/ids');
+        const response = await axios.get('https://seismic-data-cataloging-3.onrender.com/blocks/ids');
         setBlockIds(response.data.block_ids);
         setLoadingBlockIds(false);
       } catch (error) {
@@ -56,8 +56,7 @@ const SurveyForm = () => {
     e.preventDefault();
     setMessage(''); // Clear previous messages
     try {
-      await axios.post('http://localhost:8000/surveys', formData);
-      setMessage('Survey data submitted successfully!');
+      await axios.post('https://seismic-data-cataloging-3.onrender.com/surveys', formData);      setMessage('Survey data submitted successfully!');
       // Optionally clear form after successful submission
       setFormData({
         block_id: '',

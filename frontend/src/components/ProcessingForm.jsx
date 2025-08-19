@@ -42,7 +42,7 @@ const ProcessingForm = () => {
   useEffect(() => {
     const fetchSurveyIds = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/surveys/ids');
+        const response = await axios.get('https://seismic-data-cataloging-3.onrender.com/surveys/ids');
         setSurveyIds(response.data.survey_ids);
         setLoadingSurveyIds(false);
       } catch (error) {
@@ -66,8 +66,7 @@ const ProcessingForm = () => {
     e.preventDefault();
     setMessage(''); // Clear previous messages
     try {
-      await axios.post('http://localhost:8000/processing', formData);
-      setMessage('Processing data submitted successfully!');
+      await axios.post('https://seismic-data-cataloging-3.onrender.com/processing', formData);      setMessage('Processing data submitted successfully!');
       // Optionally clear form after successful submission
       setFormData({
         survey_id: '',

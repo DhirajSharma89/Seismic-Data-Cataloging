@@ -52,7 +52,7 @@ const ProcessingMediaForm = () => {
   useEffect(() => {
     const fetchProcessingIds = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/processing/ids');
+        const response = await axios.get('https://seismic-data-cataloging-3.onrender.com/processing/ids');
         setProcessingIds(response.data.processing_ids);
         setLoadingProcessingIds(false);
       } catch (error) {
@@ -76,8 +76,7 @@ const ProcessingMediaForm = () => {
     e.preventDefault();
     setMessage(''); // Clear previous messages
     try {
-      await axios.post('http://localhost:8000/processing-media', formData);
-      setMessage('Processing media data submitted successfully!');
+      await axios.post('https://seismic-data-cataloging-3.onrender.com/processing-media', formData);      setMessage('Processing media data submitted successfully!');
       // Optionally clear form after successful submission
       setFormData({
         pro_serial_num: '',

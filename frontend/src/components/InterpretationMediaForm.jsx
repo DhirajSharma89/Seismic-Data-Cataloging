@@ -43,7 +43,7 @@ const InterpretationMediaForm = () => {
   useEffect(() => {
     const fetchSurveyIds = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/surveys/ids');
+        const response = await axios.get('https://seismic-data-cataloging-3.onrender.com/surveys/ids');
         setSurveyIds(response.data.survey_ids);
         setLoadingSurveyIds(false);
       } catch (error) {
@@ -60,7 +60,7 @@ const InterpretationMediaForm = () => {
   useEffect(() => {
     const fetchInterpretationIds = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/interpretation/ids');
+        const response = await axios.get('https://seismic-data-cataloging-3.onrender.com/interpretation/ids');
         setInterpretationIds(response.data.interpretation_ids);
         setLoadingInterpretationIds(false);
       } catch (error) {
@@ -85,8 +85,7 @@ const InterpretationMediaForm = () => {
     e.preventDefault();
     setMessage(''); // Clear previous messages
     try {
-      await axios.post('http://localhost:8000/interpretation-media', formData);
-      setMessage('Interpretation media data submitted successfully!');
+      await axios.post('https://seismic-data-cataloging-3.onrender.com/interpretation-media', formData);      setMessage('Interpretation media data submitted successfully!');
       // Optionally clear form after successful submission
       setFormData({
         integ_media_id: '',

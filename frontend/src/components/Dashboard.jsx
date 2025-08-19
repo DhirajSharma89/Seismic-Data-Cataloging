@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+const API_BASE = "https://seismic-data-cataloging-3.onrender.com";
+
 const Card = ({ title, desc, link }) => (
   <div className="card">
     <h3>{title}</h3>
@@ -34,15 +36,15 @@ const Dashboard = () => {
   const [aboutIndex, setAboutIndex] = useState(0);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/blocks/count')
+    axios.get(`${API_BASE}/blocks/count`)
       .then(res => setBlockCount(res.data.count))
       .catch(() => setBlockCount(0));
 
-    axios.get('http://localhost:8000/surveys/count')
+    axios.get(`${API_BASE}/surveys/count`)
       .then(res => setSurveyCount(res.data.count))
       .catch(() => setSurveyCount(0));
 
-    axios.get('http://localhost:8000/processing-media/count')
+    axios.get(`${API_BASE}/processing-media/count`)
       .then(res => {
         const mediaCount = res.data.count;
         const volume = (mediaCount * 0.5).toFixed(1);
@@ -50,25 +52,21 @@ const Dashboard = () => {
       })
       .catch(() => setDataVolume('0 TB'));
 
-      axios.get('http://localhost:8000/processing/count')
+    axios.get(`${API_BASE}/processing/count`)
       .then(res => setProcessedDataCount(res.data.count))
       .catch(error => {
         console.error("Error fetching processed data count:", error);
         setProcessedDataCount(0);
       });
 
-    // NEW: Fetch Interpretation Data Count (assuming an endpoint like /interpretation/count)
-    axios.get('http://localhost:8000/interpretation/count')
+    axios.get(`${API_BASE}/interpretation/count`)
       .then(res => setInterpretationCount(res.data.count))
       .catch(error => {
         console.error("Error fetching interpretation count:", error);
         setInterpretationCount(0);
       });
 
-    // NEW: Fetch Acquisition Data Count (for 'Survey Info' in stats, assuming /acquisition/count)
-    // This is distinct from 'surveyCount' which might be for survey definitions.
-    // Adjust the endpoint if 'Survey Info' in stats should refer to something else.
-    axios.get('http://localhost:8000/acquisition/count')
+    axios.get(`${API_BASE}/acquisition/count`)
       .then(res => setAcquisitionCount(res.data.count))
       .catch(error => {
         console.error("Error fetching acquisition count:", error);
@@ -94,7 +92,6 @@ const Dashboard = () => {
         <Card title="Processing Data" desc="Upload processing info" link="/processing" />
         <Card title="Interpretation Data" desc="Record interpretation results" link="/interpretation" />
         <Card title="Data Reports" desc="View visualizations and records of data" link="/report" />
-        
       </div>
 
       <h2 style={{ marginTop: '50px' }}>Seismic Stats</h2>
@@ -102,7 +99,7 @@ const Dashboard = () => {
         <StatBox value={blockCount} label="Total Blocks" />
         <StatBox value={surveyCount} label="Active Surveys" />
         <StatBox value={dataVolume} label="Data Volume" />
-        <StatBox value={acquisitionCount} label="Acquisition Records" /> {/* Renamed from 'Survey Info' for clarity */}
+        <StatBox value={acquisitionCount} label="Acquisition Records" />
         <StatBox value={processedDataCount} label="Processed Data Records" />
         <StatBox value={interpretationCount} label="Interpretation Records" />
       </div>
