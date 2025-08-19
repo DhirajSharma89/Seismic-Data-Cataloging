@@ -38,8 +38,8 @@ from fastapi.responses import RedirectResponse
 
 @app.get("/")
 async def root():
-    return RedirectResponse(url="https://seismic-data-cataloging-4.onrender.com/")
+    return RedirectResponse(url="https://seismic-data-cataloging-6.onrender.com/")
 
 @app.get("/{full_path:path}")
 async def catch_all(full_path: str):
-    return RedirectResponse(url=f"https://seismic-data-cataloging-4.onrender.com/{full_path}")
+    return RedirectResponse(url=f"https://seismic-data-cataloging-6.onrender.com/{full_path}")
